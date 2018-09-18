@@ -173,6 +173,48 @@ namespace Inventory.Models
         conn.Dispose();
       }
     }
+    public static MagicCard Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM magic_card WHERE id = @thisId;";
+
+      MySqlParameter thisId = new MySqlParameter();
+      thisId.ParameterName = "@thisId";
+      thisId.Value = id;
+      cmd.Parameters.Add(thisId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      int MagicCardId = 0;
+      string MagicCardName = "";
+      string MagicCardColor = "";
+      string MagicCardRarity = "";
+      string MagicCardType = "";
+      string MagicCardSet = "";
+
+      while (rdr.Read())
+      {
+        MagicCardId = rdr.GetInt32(0);
+        MagicCardName = rdr.GetString(1);
+        MagicCardColor = rdr.GetString(2);
+        MagicCardRarity = rdr.GetString(3);
+        MagicCardType = rdr.GetString(4);
+        MagicCardSet = rdr.GetString(5);
+      }
+
+      MagicCard foundMagicCard = new MagicCard(MagicCardName, MagicCardColor, MagicCardRarity, MagicCardType, MagicCardSet, MagicCardId);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      
+      return foundMagicCard;
+    }
 
     public override bool Equals(System.Object otherCard)
     {

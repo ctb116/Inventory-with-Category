@@ -57,5 +57,19 @@ namespace Inventory.Tests
       //Assert
       Assert.AreEqual(testId, result);
     }
+
+    [TestMethod]
+    public void Find_FindMagicCardDatabase_MagicCard()
+    {
+      //Arrange
+      MagicCard testMagicCard = new MagicCard("1", "2", "2", "2", "2");
+      testMagicCard.Save();
+
+      //Act
+      MagicCard foundMagicCard = MagicCard.Find(testMagicCard.GetId());
+
+      //Assert
+      Assert.AreEqual(testMagicCard, foundMagicCard);
+    }
   }
 }
