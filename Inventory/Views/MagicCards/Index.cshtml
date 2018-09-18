@@ -1,0 +1,15 @@
+<h1>Magic Cards you own</h1>
+
+<a href="/magiccards/new">Enter a new card</a>
+
+<ul>
+@foreach(var card in Model)
+{
+  <li>Name: @card.GetName()</li>
+  <li>Color: @card.GetColor()</li>
+  <li>Rarity: @card.GetRarity()</li>
+  <li>Type: @card.GetCardType()</li>
+  <li>Set: @card.GetSet()</li>
+  <br>
+}
+</ul>
