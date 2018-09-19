@@ -1,5 +1,7 @@
 <form action="/magiccards" method="post">
 
+  <input id='categoryId' name='categoryId' type='hidden' value='@Model.GetId()'>
+
   <label for="newCardName">Enter the name of the card</label>
   <input id="newCardName" name="newCardName" type="text">
 

@@ -42,17 +42,17 @@ namespace Inventory.Controllers
       return View(model);
     }
 
-    [HttpPost("/magiccards")]
-    public ActionResult CreateItem(int categoryId, string newCardName, string newCardColor, string newCardRarity, string newCardType, string newCardSet)
-    {
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      Category foundCategory = Category.Find(categoryId);
-      MagicCard newCard = new MagicCard(newCardName, newCardColor, newCardRarity, newCardType, newCardSet, categoryId);
-      foundCategory.AddCard(newCard);
-      List<MagicCard> categoryItems = foundCategory.GetMagicCards();
-      model.Add("magiccards", categoryItems);
-      model.Add("category", foundCategory);
-      return View("Details", model);
-    }
+    // [HttpPost("/magiccards")]
+    // public ActionResult CreateItem(int categoryId, string newCardName, string newCardColor, string newCardRarity, string newCardType, string newCardSet)
+    // {
+    //   Dictionary<string, object> model = new Dictionary<string, object>();
+    //   Category foundCategory = Category.Find(categoryId);
+    //   MagicCard newCard = new MagicCard(newCardName, newCardColor, newCardRarity, newCardType, newCardSet, categoryId);
+    //   foundCategory.AddCard(newCard);
+    //   List<MagicCard> categoryItems = foundCategory.GetMagicCards();
+    //   model.Add("magiccards", categoryItems);
+    //   model.Add("category", foundCategory);
+    //   return View("Details", model);
+    // }
   }
 }

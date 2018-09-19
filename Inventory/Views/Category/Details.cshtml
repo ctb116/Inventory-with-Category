@@ -1,7 +1,7 @@
 <h3>Here are all the items in this category:</h3>
 <ol>
 
-@foreach (var card in @Model["MagicCards"])
+@foreach (var card in @Model["magiccards"])
 {
 <li><a href='/category/@Model["category"].GetId()/magiccards/@card.GetId()'> @card.GetName()</a></li>
 }
