@@ -13,8 +13,9 @@ namespace Inventory.Models
     private string _rarity;
     private string _type;
     private string _set;
+    private int _categoryId;
 
-    public MagicCard(string newName, string newColor, string newRarity, string newType, string newSet, int newId = 0)
+    public MagicCard(string newName, string newColor, string newRarity, string newType, string newSet, int categoryId, int newId = 0)
     {
       _id = newId;
       _name = newName;
@@ -22,6 +23,7 @@ namespace Inventory.Models
       _rarity = newRarity;
       _type = newType;
       _set = newSet;
+      _categoryId = categoryId;
     }
 
     public int GetId()
@@ -78,6 +80,10 @@ namespace Inventory.Models
     {
       _set = newSet;
     }
+    public int GetCategoryId()
+     {
+         return _categoryId;
+     }
 
     public void Save()
     {
@@ -85,7 +91,7 @@ namespace Inventory.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO magic_card (Name, Color, Rarity, Type, CardSet) VALUES (@MagicCardName, @MagicCardColor, @MagicCardRarity, @MagicCardType, @MagicCardSet);";
+      cmd.CommandText = @"INSERT INTO magic_card (Name, Color, Rarity, Type, CardSet, category_id) VALUES (@MagicCardName, @MagicCardColor, @MagicCardRarity, @MagicCardType, @MagicCardSet, @category_id);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@MagicCardName";
@@ -111,6 +117,11 @@ namespace Inventory.Models
       cardSet.ParameterName = "@MagicCardSet";
       cardSet.Value = _set;
       cmd.Parameters.Add(cardSet);
+
+      MySqlParameter categoryId = new MySqlParameter();
+      categoryId.ParameterName = "@category_id";
+      categoryId.Value = this._categoryId;
+      cmd.Parameters.Add(categoryId);
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;  // Notice the slight update to this line of code!
@@ -138,7 +149,8 @@ namespace Inventory.Models
         string magicCardRarity = rdr.GetString(3);
         string magicCardType = rdr.GetString(4);
         string magicCardSet = rdr.GetString(5);
-        MagicCard newMagicCard = new MagicCard(magicCardName, magicCardColor, magicCardRarity, magicCardType, magicCardSet, magicCardId);
+        int magicCardCategoryId = rdr.GetInt32(6);
+        MagicCard newMagicCard = new MagicCard(magicCardName, magicCardColor, magicCardRarity, magicCardType, magicCardSet, magicCardCategoryId, magicCardId);
         allMagicCards.Add(newMagicCard);
       }
       conn.Close();
@@ -179,7 +191,7 @@ namespace Inventory.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM magic_card WHERE id = @thisId;";
+      cmd.CommandText = @"SELECT * FROM inventory WHERE id = @thisId;";
 
       MySqlParameter thisId = new MySqlParameter();
       thisId.ParameterName = "@thisId";
@@ -194,6 +206,7 @@ namespace Inventory.Models
       string MagicCardRarity = "";
       string MagicCardType = "";
       string MagicCardSet = "";
+      int magicCardCategoryId = 0;
 
       while (rdr.Read())
       {
@@ -203,16 +216,17 @@ namespace Inventory.Models
         MagicCardRarity = rdr.GetString(3);
         MagicCardType = rdr.GetString(4);
         MagicCardSet = rdr.GetString(5);
+        magicCardCategoryId = rdr.GetInt32(6);
       }
 
-      MagicCard foundMagicCard = new MagicCard(MagicCardName, MagicCardColor, MagicCardRarity, MagicCardType, MagicCardSet, MagicCardId);
+      MagicCard foundMagicCard = new MagicCard(MagicCardName, MagicCardColor, MagicCardRarity, MagicCardType, MagicCardSet, magicCardCategoryId, MagicCardId);
 
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      
+
       return foundMagicCard;
     }
 
@@ -225,14 +239,16 @@ namespace Inventory.Models
       else
       {
         MagicCard newCard = otherCard as MagicCard;
+        bool idEquality = (this.GetId() == newCard.GetId());
         bool nameEquality = (this.GetName() == newCard.GetName());
         bool colorEquality = (this.GetColor() == newCard.GetColor());
         bool rarityEquality = (this.GetRarity() == newCard.GetRarity());
         bool typeEquality = (this.GetCardType() == newCard.GetCardType());
         bool setEquality = (this.GetSet() == newCard.GetSet());
+        bool categoryEquality = (this.GetCategoryId() == newCard.GetCategoryId());
         bool allEquality;
 
-        if (nameEquality && colorEquality && rarityEquality && typeEquality && setEquality)
+        if (idEquality && nameEquality && colorEquality && rarityEquality && typeEquality && setEquality && categoryEquality)
         {
           allEquality = true;
         }
@@ -247,7 +263,7 @@ namespace Inventory.Models
 
     public override int GetHashCode()
     {
-      string toHash = this.GetName() + this.GetColor() + this.GetRarity() + this.GetCardType() + this.GetSet();
+      string toHash = this.GetId() + this.GetName() + this.GetColor() + this.GetRarity() + this.GetCardType() + this.GetSet() + this.GetCategoryId();
       return toHash.GetHashCode();
     }
 

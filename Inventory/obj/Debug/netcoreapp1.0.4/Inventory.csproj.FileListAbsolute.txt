@@ -6,3 +6,11 @@
 /Users/Guest/Desktop/Inventory.Solution/Inventory/bin/Debug/netcoreapp1.0.4/Inventory.pdb
 /Users/Guest/Desktop/Inventory.Solution/Inventory/obj/Debug/netcoreapp1.0.4/Inventory.dll
 /Users/Guest/Desktop/Inventory.Solution/Inventory/obj/Debug/netcoreapp1.0.4/Inventory.pdb
+/Users/Guest/Desktop/InventorySQL/Inventory/bin/Debug/netcoreapp1.0.4/Inventory.deps.json
+/Users/Guest/Desktop/InventorySQL/Inventory/bin/Debug/netcoreapp1.0.4/Inventory.runtimeconfig.json
+/Users/Guest/Desktop/InventorySQL/Inventory/bin/Debug/netcoreapp1.0.4/Inventory.runtimeconfig.dev.json
+/Users/Guest/Desktop/InventorySQL/Inventory/bin/Debug/netcoreapp1.0.4/Inventory.dll
+/Users/Guest/Desktop/InventorySQL/Inventory/bin/Debug/netcoreapp1.0.4/Inventory.pdb
+/Users/Guest/Desktop/InventorySQL/Inventory/obj/Debug/netcoreapp1.0.4/Inventory.AssemblyInfo.cs
+/Users/Guest/Desktop/InventorySQL/Inventory/obj/Debug/netcoreapp1.0.4/Inventory.dll
+/Users/Guest/Desktop/InventorySQL/Inventory/obj/Debug/netcoreapp1.0.4/Inventory.pdb

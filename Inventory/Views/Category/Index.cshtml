@@ -1,0 +1,10 @@
+<h1>Magic Cards!!!</h1>
+<ul>
+@foreach(var cardCategory in Model)
+
+{
+  <li><a href="/category/@cardCategory.GetId()">@cardCategory.GetName()</a></li>
+}
+</ul>
+<a href = "/"> Home </a>
+<a href = "/category/new"> Add a new category</a>

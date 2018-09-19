@@ -1,0 +1,12 @@
+<h3>Here are all the items in this category:</h3>
+<ol>
+
+@foreach (var card in @Model["MagicCards"])
+{
+<li><a href='/category/@Model["category"].GetId()/magiccards/@card.GetId()'> @card.GetName()</a></li>
+}
+</ol>
+
+<p><a href='/category/@Model["category"].GetId()/magiccards/new'>Add a new item</a></p>
+<p><a href='/category'>Return to category list</a></p>
+<p><a href='/'>Return to Main Page</a></p>
